@@ -1,0 +1,48 @@
+Servicio REST 
+
+================================================================================
+Entidad Clientes.
+================================================================================
+
+URL: http://localhost:8086/javee-web-api-1.0/resources/clientes/v1
+
+Path: /all
+Descripción: no recibe parametros y entrega un Json con los clientes.
+
+Path: /byId
+Descripción: recibe como parametro un Id por GET y devuelve un cliente en formato Json.
+
+Path: /likeApellido
+Descripción: recibe como parametro un apellido por GET y devuelve una lista en formato Json.
+
+Path: /alta
+Descripción: recibe parametros por post 
+	String nombre
+	String apellido
+	String direccion
+	String comentarios
+
+Se devuelde un int con el id generado, sino se dio de alta se devuelve id 0
+
+================================================================================
+Entidad Articulos.
+================================================================================
+
+URL: http://localhost:8086/javee-web-api-1.0/resources/articulos/v1
+
+Path: /all
+Descripción: no recibe parametros y entrega un Json con los articulos.
+
+Path: /byId
+Descripción: recibe como parametro un Id por GET y devuelve un articulo en formato Json.
+
+Path: /likeDescripcion
+Descripción: recibe como parametro una descripcion por GET y devuelve una lista en formato Json.
+
+Path: /alta
+Descripción: recibe parametros por post 
+	int id
+	String descripcion
+	float precio
+
+retorna true/false
