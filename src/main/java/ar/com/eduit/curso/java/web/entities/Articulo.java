@@ -2,6 +2,7 @@ package ar.com.eduit.curso.java.web.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,23 +33,24 @@ public class Articulo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
+    @Column(name = "id")    
+    private Integer id;    
+    
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "descripcion")
+    @Column(name = "descripcion")    
     private String descripcion;
-    @Basic(optional = false)
+    
     @NotNull
     @Column(name = "precio")
     private double precio;
-    @Basic(optional = false)
+    
     @NotNull
     @Column(name = "stock")
     private int stock;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArticulo")
-    private Collection<Cliente> clientesCollection;
+    private List<Cliente> clientesCollection;
 
     public Articulo() {
     }
@@ -56,14 +58,8 @@ public class Articulo implements Serializable {
     public Articulo(Integer id) {
         this.id = id;
     } 
-
-    public Articulo(String descripcion, double precio, int stock) {
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.stock = stock;
-    }
     
-    public Articulo(Integer id, String descripcion, double precio, int stock, Collection<Cliente> clientesCollection) {
+    public Articulo(Integer id, String descripcion, double precio, int stock, List<Cliente> clientesCollection) {
         this.id = id;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -107,7 +103,7 @@ public class Articulo implements Serializable {
         return clientesCollection;
     }
 
-    public void setClientesCollection(Collection<Cliente> clientesCollection) {
+    public void setClientesCollection(List<Cliente> clientesCollection) {
         this.clientesCollection = clientesCollection;
     }
 
@@ -133,7 +129,12 @@ public class Articulo implements Serializable {
 
     @Override
     public String toString() {
-        return "Articulo{" + "id=" + id + ", descripcion=" + descripcion + ", precio=" + precio + ", stock=" + stock + ", clientesCollection=" + clientesCollection + '}';
+        return "Articulo{"
+                + "id=" + id
+                + ", descripcion=" + descripcion
+                + ", precio=" + precio
+                + ", stock=" + stock
+                + "}";
     }
 
 }
