@@ -9,18 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 public class ArticuloRepository implements I_ArticuloRepository {
 
     private String url;
-    private EntityManagerFactory emf;
+    //private EntityManagerFactory emf;
 
-    public ArticuloRepository() {
+    @PersistenceContext(unitName = "Articulo")
+    private EntityManager em;
+
+    public ArticuloRepository(EntityManager em) {
+        this.em = em;
     }
 
-    public ArticuloRepository(EntityManagerFactory emf) {
-        this.emf = emf;
+    public ArticuloRepository() {
     }
 
     public ArticuloRepository(String url) {
@@ -37,7 +41,6 @@ public class ArticuloRepository implements I_ArticuloRepository {
         System.out.println("url");
         Client.getResponse(url2);
         try {
-            EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
             em.persist(articulo);
             em.getTransaction().commit();
@@ -54,53 +57,11 @@ public class ArticuloRepository implements I_ArticuloRepository {
 
     @Override
     public List<Articulo> getAll() {
-        List<Articulo> list = new ArrayList();
-        try {
-            EntityManager em = emf.createEntityManager();
-            final String query = "SELECT c from Articulo c";
-            TypedQuery<Articulo> query1 = em.createQuery(query, Articulo.class);
-            list = query1.getResultList();
-            
-
-            //EntityManager em = emf.createEntityManager();
-            //list = (List<Articulo>) em.createNamedQuery("Alumno.findAll").getResultList();
-            //list = new Gson()
-            //        .fromJson(Client.getResponse(url + "/all"),
-            //                new TypeToken<List<Articulo>>() {
-            //                }.getType());
-
-            em.close();
-        } catch (Exception e) {
-            System.out.println("*********************************************");
-            System.out.println(e);
-            System.out.println("*********************************************");
-        }
-        return list;
-    }
-
-    @Override
-    public List<Articulo> getLikeDescripcion(String descripcion) {
-        List<Articulo> list = new ArrayList();
-        if (descripcion == null) {
-            return list;
-        }
-        try {
-
-            EntityManager em = emf.createEntityManager();
-            list = (List<Articulo>) em.createNamedQuery("Alumno.findAll").getResultList();
-            em.close();
-            list = new Gson()
-                    .fromJson(Client.getResponse(url + "/likeDescripcion?descripcion=" + descripcion),
-                            new TypeToken<List<Articulo>>() {
-                            }.getType());
-        } catch (Exception e) {
-            System.out.println("*********************************************");
-            System.out.println(e);
-            System.out.println("*********************************************");
-        }
-        return list;
-    }
-
+        String query = "SELECT a FROM Articulo a";
+        List<Articulo> articulos = em.createQuery(query).getResultList();
+        return articulos;
+    }    
+    
     @Override
     public Articulo getById(int id) {
         Articulo articulo = new Articulo();

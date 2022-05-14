@@ -15,7 +15,6 @@ public class TestRepository {
 
     public static void main(String[] args) {
 
-        I_ArticuloRepository ar = new ArticuloRepository();
         
         
         System.out.println("1*************************************************");
@@ -24,6 +23,7 @@ public class TestRepository {
         System.out.println("2*************************************************");
         System.out.println(LocalTime.now());
         EntityManager em = emf.createEntityManager();
+        I_ArticuloRepository ar = new ArticuloRepository(em);
 
         //Curso curso=new Curso("Jardineria","Rios","JUEVES","NOCHE");
         /*
@@ -49,5 +49,6 @@ public class TestRepository {
          
         */
         ar.getAll().forEach(System.out::println);
+        emf.close();
     }
 }
